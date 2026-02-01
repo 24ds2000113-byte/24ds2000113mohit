@@ -1,10 +1,19 @@
-name: Assignment Test
+name: Test Assignment
 
-on: [workflow_dispatch]  # Manual trigger
+on:
+  workflow_dispatch:  # Manual trigger only
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: "24ds2000113@ds.study.iitm.ac.in"
+      - name: Checkout  # First step needed sometimes
+        uses: actions/checkout@v4
+
+      - id: email-step  # Explicit ID to avoid name issues
+        name: 24ds2000113@ds.study.iitm.ac.in
         run: echo "Hello, world!"
+
+      - name: Confirm step ran
+        run: echo "Step ID: ${{ steps.email-step.outcome }}"
+
