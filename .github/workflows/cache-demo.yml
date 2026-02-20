@@ -1,21 +1,23 @@
 name: Cache Demo
 
-on: [push]
+on:
+  push:
 
 jobs:
   cache-job:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: prime-cache-28e6edb
-      id: prime-cache-28e6edb
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache
-        key: cache-28e6edb
-        
-    - name: Show cache result
-      run: echo "Cache result: ${{ steps.prime-cache-28e6edb.outputs.cache-hit }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prime Cache
+        id: cache_step
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache
+          key: cache-28e6edb
+
+      - name: Show cache result
+        run: echo "Cache result: ${{ steps.cache_step.outputs.cache-hit }}"
+
