@@ -1,0 +1,21 @@
+name: Cache Demo
+
+on: [push]  # Runs on every push to any branch
+
+jobs:
+  cache-job:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Prime cache  # This is the REQUIRED step name
+      id: prime-cache-28e6edb
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache  # Cache some dummy path (like pip/npm cache)
+        key: cache-28e6edb  # EXACT key they specified
+        
+    - name: Show cache result
+      run: echo "Cache result: ${{ steps.prime-cache-28e6edb.outputs.cache-hit }}"
