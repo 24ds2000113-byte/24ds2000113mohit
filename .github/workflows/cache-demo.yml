@@ -8,10 +8,10 @@ jobs:
   runs-on: ubuntu-latest
 
   steps:
-    - name: Checkout code
+    - name: prime-cache-28e6edb
       uses: actions/checkout@v4
 
-    - name: Prime Cache
+    - name: cache-28e6edb
       id: cache_step
       uses: actions/cache@v4
       with:
