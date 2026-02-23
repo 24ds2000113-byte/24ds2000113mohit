@@ -1,23 +1,28 @@
-name: Cache Demo
+name: Daily Commit by 24ds2000113@ds.study.iitm.ac.in
 
 on:
- push:
+  schedule:
+    - cron: '0 9 * * *'  # Runs daily at 9:00 AM UTC
+  workflow_dispatch:  # Allows manual testing
 
 jobs:
- cache-job:
-  runs-on: ubuntu-latest
+  daily-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-  steps:
-    - name: prime-cache-28e6edb
-      uses: actions/checkout@v4
+      - name: Update status file by 24ds2000113@ds.study.iitm.ac.in
+        run: |
+          echo "$(date): Daily automated update ran successfully!" >> STATUS.md
 
-    - name: cache-28e6edb
-      id: cache_step
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache
-        key: cache-28e6edb
-
-    - name: Show cache result
-      run: |
-           echo "Cache result: ${{ steps.cache_step.outputs.cache-hit }}"
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add STATUS.md
+          git commit -m "Daily update: $(date)"
+          git push
